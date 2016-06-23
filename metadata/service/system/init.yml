@@ -11,11 +11,11 @@ parameters:
           enabled: true
           name: root
           home: /root
-      timezone: Europe/Prague
+      timezone: Europe/Oslo
       cluster: default
-    network:
-      enabled: true
-      hostname: ${linux:system:name}
-      fqdn: ${linux:system:name}.${linux:system:domain}
-    storage:
-      enabled: true
+#    network:
+#      enabled: true
+#      hostname: ${linux:system:name}
+#      fqdn: ${linux:system:name}.${linux:system:domain}
+#    storage:
+#      enabled: true
