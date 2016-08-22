@@ -17,5 +17,5 @@ parameters:
 #      enabled: true
 #      hostname: ${linux:system:name}
 #      fqdn: ${linux:system:name}.${linux:system:domain}
-#    storage:
-#      enabled: true
+    storage:
+      enabled: true
