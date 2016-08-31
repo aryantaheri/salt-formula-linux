@@ -58,6 +58,7 @@ linux_repo_{{ name }}:
   {%- if repo.key_url is defined %}
   - key_url: {{ repo.key_url }}
   {%- endif %}
+  - refresh_db: true
 
 {%- endif %}
 
@@ -80,6 +81,7 @@ linux_repo_{{ name }}:
   {%- if repo.gpgkey is defined %}
   - gpgkey: {{ repo.gpgkey }}
   {%- endif %}
+  - refresh_db: true
 
 {%- endif %}
 
