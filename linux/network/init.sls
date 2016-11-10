@@ -11,3 +11,6 @@ include:
 - linux.network.interface
 {%- endif %}
 - linux.network.proxy
+{%- if network.persistent_net is defined %}
+- linux.network.persistent_net
+{%- endif %}
