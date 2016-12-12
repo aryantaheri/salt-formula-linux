@@ -545,6 +545,10 @@ Setup resolv.conf, nameservers, domain and search domains
           search:
             - my.example.com
             - example.com
+          options:
+            - ndots:5
+            - timeout:2
+            - attempts:2
 
 Linux storage pillars
 ---------------------
@@ -558,6 +562,7 @@ Linux with mounted Samba
         enabled: true
         mount:
           samba1:
+          - enabled: true
           - path: /media/myuser/public/
           - device: //192.168.0.1/storage
           - file_system: cifs
@@ -599,6 +604,7 @@ LVM group `vg1` with one device and `data` volume mounted into `/mnt/data`
         storage:
           mount:
             data:
+              enabled: true
               device: /dev/vg1/data
               file_system: ext4
               path: /mnt/data
@@ -686,6 +692,32 @@ Disabled multipath (the default setup)
         storage:
           multipath:
             enabled: false
+
+External config generation
+--------------------------
+
+You are able to use config support metadata between formulas and only generate
+config files for external use, eg. docker, etc.
+
+.. code-block:: yaml
+
+    parameters:
+      linux:
+        system:
+          config:
+            pillar:
+              jenkins:
+                master:
+                  home: /srv/volumes/jenkins
+                  approved_scripts:
+                    - method java.net.URL openConnection
+                  credentials:
+                    - type: username_password
+                      scope: global
+                      id: test
+                      desc: Testing credentials
+                      username: test
+                      password: test
 
 
 Usage
