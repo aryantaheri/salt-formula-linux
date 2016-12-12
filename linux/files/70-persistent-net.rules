@@ -1,7 +1,6 @@
 {%- from "linux/map.jinja" import network with context %}
 
 {%- for rule in network.persistent_net.rules %}
-
 SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="{{ rule.mac }}", NAME="{{ rule.interface }}"
 
 {%- endfor %}
