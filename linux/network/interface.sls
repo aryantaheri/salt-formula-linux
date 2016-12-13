@@ -89,7 +89,8 @@ linux_interface_{{ interface_name }}:
   - type: {{ interface.type }}
   {%- if interface.address is defined %}
   {%- if grains.os_family == 'Debian' %}
-  - unless: grep -q "iface {{ interface_name }} " /etc/network/interfaces
+# Why this is here?
+#  - unless: grep -q "iface {{ interface_name }} " /etc/network/interfaces
   - proto: {{ interface.get('proto', 'static') }}
   {% endif %}
   {%- if grains.os_family == 'RedHat' %}
@@ -106,6 +107,12 @@ linux_interface_{{ interface_name }}:
   {%- endif %}
   {%- if interface.name_servers is defined %}
   - dns: {{ interface.name_servers }}
+  {%- endif %}
+  {%- if interface.dns_nameservers is defined %}
+  - dns_nameservers: {{ interface.dns_nameservers }}
+  {%- endif %}
+  {%- if interface.dns_search is defined %}
+  - dns_search: {{ interface.dns_search }}
   {%- endif %}
   {%- if interface.wireless is defined and grains.os_family == 'Debian' %}
   {%- if interface.wireless.security == "wpa" %}
