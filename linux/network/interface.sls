@@ -108,6 +108,9 @@ linux_interface_{{ interface_name }}:
   {%- if interface.name_servers is defined %}
   - dns: {{ interface.name_servers }}
   {%- endif %}
+  {%- if interface.search is defined %}
+  - search: {{ interface.search }}
+  {%- endif %}
   {%- if interface.dns_nameservers is defined %}
   - dns_nameservers: {{ interface.dns_nameservers }}
   {%- endif %}
