@@ -7,6 +7,12 @@ udev_persist_interface_name:
     - name: /etc/udev/rules.d/70-persistent-net.rules
     - source: salt://linux/files/70-persistent-net.rules
     - template: jinja
+
+udev_trigger:
+  cmd.run:
+    - name: 'udevadm trigger --type=devices --action=add'
+    - onchanges:
+        - file: /etc/udev/rules.d/70-persistent-net.rules
 {% endif %}
 
 {% endif %}

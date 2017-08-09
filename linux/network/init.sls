@@ -7,10 +7,10 @@ include:
 {%- if network.resolv is defined %}
 - linux.network.resolv
 {%- endif %}
+{%- if network.persistent_net is defined %}
+- linux.network.persistent_net
+{%- endif %}
 {%- if network.interface|length > 0 %}
 - linux.network.interface
 {%- endif %}
 - linux.network.proxy
-{%- if network.persistent_net is defined %}
-- linux.network.persistent_net
-{%- endif %}

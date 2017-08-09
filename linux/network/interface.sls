@@ -150,6 +150,10 @@ linux_interface_{{ interface_name }}:
   - slaves: {{ interface.slaves }}
   - mode: {{ interface.mode }}
   {%- endif %}
+  {% if network.persistent_net is defined %}
+  - require:
+      - file: /etc/udev/rules.d/70-persistent-net.rules
+  {%- endif %}
 
 {%- for network in interface.get('use_ovs_ports', []) %}
 
@@ -169,7 +173,7 @@ remove_interface_{{ network }}_line2:
 
 {%- if interface.gateway is defined %}
 
-linux_system_network:
+linux_system_network_{{ interface_name }}:
   network.system:
   - enabled: {{ interface.enabled }}
   - hostname: {{ network.fqdn }}
@@ -239,6 +243,20 @@ linux_network_{{ interface_name }}_routes:
       netmask: {{ route.netmask }}
       gateway: {{ route.gateway }}
     {%- endfor %}
+
+fix_debian_if-up.d_route-{{ interface_name }}:
+  file.line:
+    - name: /etc/network/if-up.d/route-{{ interface_name }}
+    - content: 'test "${IFACE}" = "{{ interface_name }}" || exit 0'
+    - mode: ensure
+    - after: "#!/bin/sh"
+
+fix_debian_if-down.d_route-{{ interface_name }}:
+  file.line:
+    - name: /etc/network/if-down.d/route-{{ interface_name }}
+    - content: 'test "${IFACE}" = "{{ interface_name }}" || exit 0'
+    - mode: ensure
+    - after: "#!/bin/sh"
 
 {%- endif %}
 
